@@ -9,7 +9,7 @@ function app() {
         cartOpen: false,
         paymentOpen: false, // Nova tela de pagamento
         paymentMethod: 'pix', // 'pix' or 'card'
-        cardType: '', // 'credit' or 'debit'
+        cardType: '', // 'credito' or 'debito'
         
         activeItem: null,
         itemQuantity: 1,
@@ -22,13 +22,13 @@ function app() {
         checkoutError: '',
 
         init() {
-            // Load cart from localStorage if exists
+
             const savedCart = localStorage.getItem('burgerCart');
             if (savedCart) {
                 this.cart = JSON.parse(savedCart);
             }
 
-            // Inicializar com a primeira categoria ativa
+
             if (this.cardapio && this.cardapio.length > 0) {
                 this.activeCategory = this.cardapio[0].categoria;
             }
@@ -42,7 +42,7 @@ function app() {
         },
 
         addToCart(item, quantity = 1, obs = '') {
-            // Find if item already exists with same obs
+
             const existingItemIndex = this.cart.findIndex(i => 
                 i.id === item.id && i.obs === obs
             );
@@ -58,21 +58,21 @@ function app() {
             }
 
             this.saveCart();
-            // Feedback visual ou abrir carrinho opcionalmente
+
         },
 
-        // Helper para pegar quantidade no carrinho de um item específico
+
         getItemQuantity(itemId) {
             const item = this.cart.find(i => i.id === itemId);
             return item ? item.quantidade : 0;
         },
 
-        // Adicionar direto do card
+
         addOne(item) {
             this.addToCart(item, 1);
         },
 
-        // Remover direto do card
+
         removeOne(item) {
             const index = this.cart.findIndex(i => i.id === item.id);
             if (index > -1) {
@@ -103,12 +103,12 @@ function app() {
 
         slugify(text) {
             return text.toString().toLowerCase()
-                .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove accents
-                .replace(/\s+/g, '-')           // Replace spaces with -
-                .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-                .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-                .replace(/^-+/, '')             // Trim - from start of text
-                .replace(/-+$/, '');            // Trim - from end of text
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .replace(/\s+/g, '-')           
+                .replace(/[^\w\-]+/g, '')       
+                .replace(/\-\-+/g, '-')         
+                .replace(/^-+/, '')             
+                .replace(/-+$/, '');            
         },
 
         removeFromCart(index) {
@@ -122,7 +122,7 @@ function app() {
         openPayment() {
             this.cartOpen = false;
             this.paymentOpen = true;
-            this.paymentMethod = 'pix'; // Reset to default
+            this.paymentMethod = 'pix';
         },
 
         checkout() {
@@ -139,7 +139,7 @@ function app() {
                 return;
             }
             
-            // Validate Payment Selection
+
             if (this.paymentMethod === 'card' && !this.cardType) {
                 this.checkoutError = 'Selecione o tipo de cartão (Crédito ou Débito).';
                 return;
@@ -172,7 +172,7 @@ function app() {
             this.cart.forEach(item => {
                 const itemTotal = item.preco * item.quantidade;
                 
-                // Tenta inferir emoji baseado no nome ou categoria (lógica simples)
+
                 let itemEmoji = '🍔'; 
                 const nomeLower = item.nome.toLowerCase();
                 if (nomeLower.includes('batata') || nomeLower.includes('fritas')) itemEmoji = '🍟';
@@ -180,24 +180,14 @@ function app() {
                 else if (nomeLower.includes('pudim') || nomeLower.includes('brownie') || nomeLower.includes('shake')) itemEmoji = '🍨';
 
                 message += `* ${item.quantidade} x ${item.nome} ( ${itemEmoji} ${item.quantidade} itens + ${itemEmoji} ... ). *\n`; 
-                // Ajuste para ficar visualmente parecido com o exemplo do usuário,
-                // embora a lógica de "2 lanches + 2 batatas" seja complexa para itens compostos,
-                // vamos manter o formato simples: "QTD x NOME ( EMOJI QTD itens )"
-                // Simplificando para o formato pedido mas dinâmico:
                 
-                // Resetando mensagem do item para formato mais limpo e fiel ao pedido:
-                // Exemplo pedido: * 1 x Combo Clássico Casal ( 🍔 2 lanches + 🍟 2 batatas médias... ) *
-                // Como não temos a composição detalhada em "itens", vamos usar o nome e preço.
                 
             });
             
-            // Refazendo o loop para garantir a formatação exata pedida
+
             this.cart.forEach(item => {
                  message += `* ${item.quantidade} x ${item.nome} *\n`;
-                 // Detalhes extras se fosse um combo complexo poderiam vir aqui
-                 
-                 // Simulação de "Escolhas" caso houvesse opções (não temos no modelo atual, mas deixarei preparado)
-                 // message += `   Escolha seu burger\n     - ...\n`;
+
                  
                  if (item.obs) {
                     message += `   ❗ OBS ITEM: ${item.obs}\n`;
@@ -233,10 +223,7 @@ function app() {
             
             window.open(`https://wa.me/${phone}?text=${encodedMessage}`, '_blank');
             
-            // Optional: clear cart after checkout
-            // this.cart = [];
-            // this.saveCart();
-            // this.paymentOpen = false;
+
         }
     }
 }
