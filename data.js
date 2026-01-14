@@ -1,13 +1,13 @@
 const loja = {
-    nome: "12KG House Burger",
+    nome: "Rei do Burguer",
     logo: "https://ui-avatars.com/api/?name=12KG+Burger&background=ORANGE&color=fff&size=128",
     telefone: "11916166623",
     endereco: "Rua dos Hambúrgueres, 123 - Centro",
     cor_tema: "orange-500",
     mensagem_saudacao: "Olá! Gostaria de fazer um pedido.",
     horario_funcionamento: "Terça a Domingo das 18h às 23h",
-    taxa_entrega: 5.00, // Valor fixo da entrega
-    tempo_estimado_entrega: "40 min" // Previsão de entrega
+    taxa_entrega: 5.00, 
+    tempo_estimado_entrega: "40 min" 
 };
 
 const cardapio = [
@@ -70,6 +70,9 @@ const cardapio = [
             }
         ]
     },
+
+
+    
     {
         categoria: "Hambúrgueres Artesanais",
         itens: [
@@ -143,6 +146,10 @@ const cardapio = [
             }
         ]
     },
+
+
+
+    
     {
         categoria: "Sobremesas",
         itens: [
